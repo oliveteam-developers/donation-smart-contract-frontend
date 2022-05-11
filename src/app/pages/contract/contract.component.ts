@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,13 +16,13 @@ import { ITableColumn, IListContractItem } from '../../interfaces';
 import { REFRESH_LIST_CONTRACTS } from '../../constants';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-contract',
+  templateUrl: './contract.component.html',
+  styleUrls: ['./contract.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class ContractComponent implements OnInit, OnDestroy {
 
-  @ViewChild('createContractModal') private createContractModal: TemplateRef<HomeComponent>
+  @ViewChild('createContractModal') private createContractModal: TemplateRef<ContractComponent>
 
   public contractTableColumns: ITableColumn[] = [];
   public listContracts: IListContractItem[] = [];
