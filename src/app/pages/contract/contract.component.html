@@ -10,7 +10,7 @@
   <div class="contract-content__contract-table">
     <div class="row">
       <div class="col-md-12">
-        <div class="table">
+        <div class="table" *ngIf="!loading">
           <p-table [columns]="contractTableColumns" [value]="listContracts">
             <ng-template pTemplate="header" let-columns>
               <tr>
@@ -31,6 +31,8 @@
             </ng-template>
           </p-table>
         </div>
+
+        <app-loading *ngIf="loading"></app-loading>
       </div>
     </div>
   </div>

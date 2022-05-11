@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 
 // Components
 import { CreateContractComponent } from '../components/create-contract/create-contract.component';
+import { LoadingComponent } from '../components/loading/loading.component';
 
 const sharedModules = [
   CommonModule,
@@ -25,6 +26,7 @@ const sharedModules = [
 
 const sharedComponents = [
   CreateContractComponent,
+  LoadingComponent
 ];
 
 @NgModule({

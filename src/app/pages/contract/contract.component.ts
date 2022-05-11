@@ -26,6 +26,7 @@ export class ContractComponent implements OnInit, OnDestroy {
 
   public contractTableColumns: ITableColumn[] = [];
   public listContracts: IListContractItem[] = [];
+  public loading: boolean = false;
 
   private subscriptions: Subscription[] = [];
   private createContractModalRef: NgbModalRef;
@@ -71,6 +72,7 @@ export class ContractComponent implements OnInit, OnDestroy {
 
   private async getListContracts() {
     try {
+      this.loading = true;
       const listContracts = await this.web3Service.factoryInstance.methods.getDeployedDonations().call();
       if (listContracts && listContracts.length) {
         let i = 0;
@@ -85,6 +87,8 @@ export class ContractComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      this.loading = false;
     }
   }
 

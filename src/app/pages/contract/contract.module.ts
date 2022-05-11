@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContractComponent } from './contract.component';
 import { ContractRoutingModule } from './contract-routing.module';
 
 // Shared
 import { SharedModule } from '../../shared/shared.module';
 
+// Components
+import { ContractComponent } from './contract.component';
+import { ContractDetailComponent } from './contract-detail/contract-detail.component';
+
 @NgModule({
   declarations: [
-    ContractComponent
+    ContractComponent,
+    ContractDetailComponent
   ],
   imports: [
     CommonModule,

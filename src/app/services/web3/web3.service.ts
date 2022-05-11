@@ -39,6 +39,11 @@ export class Web3Service {
     return this.factory;
   }
 
+  public donationInstance(address: string) {
+    const abi = this.contract.donation?.abi;
+    return new this.web3.eth.Contract(JSON.parse(JSON.stringify(abi)), address);
+  }
+
   private loadWeb3() {
     if (window && window.ethereum) {
       window.ethereum.request({ method: 'eth_requestAccounts' });
