@@ -10,7 +10,7 @@
 
         <input type="text" formControlName="minimumContribution" pInputText />
         
-        <div *ngIf="form.controls['minimumContribution'].invalid && (form.controls['minimumContribution'].dirty || form.controls['minimumContribution'].touched)">
+        <div *ngIf="form.controls['minimumContribution'].invalid && form.controls['minimumContribution'].touched">
           <small class="error" *ngIf="form.controls['minimumContribution'].errors?.['required']">
             Minimum Contribution is required.
           </small>
@@ -23,10 +23,19 @@
     </div>
   
     <div class="modal-footer">
-      <button 
+      <button
+        *ngIf="!loading"
         pButton 
         type="submit" 
         label="Create"
+      ></button>
+
+      <button
+        *ngIf="loading"
+        pButton 
+        type="button" 
+        label="Create"
+        [loading]="true"
       ></button>
   
       <button 

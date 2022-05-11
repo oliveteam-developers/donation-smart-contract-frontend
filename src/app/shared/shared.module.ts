@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 
 // Components
 import { CreateContractComponent } from '../components/create-contract/create-contract.component';
@@ -19,6 +20,7 @@ const sharedModules = [
   NgbModule,
   InputTextModule,
   ReactiveFormsModule,
+  ToastModule,
 ];
 
 const sharedComponents = [

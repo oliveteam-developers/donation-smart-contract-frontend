@@ -1,14 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+// States
+import { emitEvent } from '../../states/event';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelperService {
 
-  constructor() { }
+  constructor(
+    private store: Store
+  ) { }
 
-  getFloatNumber(value: string) {
-    return parseFloat(value).toLocaleString('en-US', { maximumFractionDigits: 2 });
+  emitEvent(name: string, data: any = null) {
+    this.store.dispatch(emitEvent({
+      data: { name, data }
+    }));
+
+    setTimeout(() => {
+      this.store.dispatch(emitEvent({ data: null }));
+    }, 3000);
   }
 
 }

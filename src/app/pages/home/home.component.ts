@@ -10,9 +10,13 @@ import { Web3Service } from '../../services/web3/web3.service';
 
 // States
 import { selectContractData } from '../../states/contract';
+import { selectEventData } from '../../states/event';
 
 // Interfaces
 import { IContractInfo } from '../../interfaces';
+
+// Constants
+import { REFRESH_LIST_CONTRACTS } from '../../constants';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +42,19 @@ export class HomeComponent implements OnInit {
       this.store.select(selectContractData).subscribe(res => {
         if (res) {
           this.contract = res;
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.store.select(selectEventData).subscribe(res => {
+        if (res) {
+          switch (res.name) {
+            case REFRESH_LIST_CONTRACTS: {
+              this.getListContracts();
+              break;
+            }
+          }
         }
       })
     );
