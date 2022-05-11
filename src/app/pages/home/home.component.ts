@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // Services
 import { ApiService } from '../../services/api/api.service';
 import { HelperService } from '../../services/helper/helper.service';
-import { Web3Service } from  '../../services/web3/web3.service';
+import { Web3Service } from '../../services/web3/web3.service';
 
 // States
 import { selectContractData } from '../../states/contract';
@@ -20,14 +21,18 @@ import { IContractInfo } from '../../interfaces';
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('createContractModal') private createContractModal: TemplateRef<HomeComponent>
+
   private subscriptions: Subscription[] = [];
   private contract: IContractInfo;
+  private createContractModalRef: NgbModalRef;
 
   constructor(
     private store: Store,
     private apiService: ApiService,
     private helperService: HelperService,
     private web3Service: Web3Service,
+    private modalService: NgbModal,
   ) {
     this.subscriptions.push(
       this.store.select(selectContractData).subscribe(res => {
@@ -40,6 +45,16 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getListContracts();
+  }
+
+  public createContract() {
+    this.createContractModalRef = this.modalService.open(this.createContractModal);
+  }
+
+  public closeModal() {
+    if (this.createContractModalRef) {
+      this.createContractModalRef.close();
+    }
   }
 
   private async getListContracts() {

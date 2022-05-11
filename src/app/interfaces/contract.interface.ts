@@ -7,3 +7,7 @@ export interface IContractInfo {
 export interface IContractItem {
   abi?: any;
 }
+
+export interface ICreateContract {
+  minimumContribution?: number;
+}

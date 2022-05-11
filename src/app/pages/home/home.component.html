@@ -1,3 +1,13 @@
 <div class="container home-content">
-  
+  <div class="home-content__title">
+    <h1>Donation Smart Contract</h1>
+  </div>
+
+  <div class="home-content__create-btn">
+    <button pButton type="button" label="New Contract" icon="pi pi-plus-circle" (click)="createContract()"></button>
+  </div>
 </div>
+
+<ng-template #createContractModal>
+  <app-create-contract (cancelCb)="closeModal()"></app-create-contract>
+</ng-template>
