@@ -12,15 +12,18 @@
     align-items: center;
     justify-content: flex-end;
   }
-  .table {
-    height: 100vh;
-    overflow: hidden;
-    overflow-y: scroll;
-    padding: 2rem 0 0 0;
-    h1 {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 200;
+  &__contract-table {
+    .table {
+      margin-top: 2rem;
+      p-table {
+        tr {
+          td {
+            a {
+              text-decoration: none !important;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -6,6 +6,34 @@
   <div class="home-content__create-btn">
     <button pButton type="button" label="New Contract" icon="pi pi-plus-circle" (click)="createContract()"></button>
   </div>
+
+  <div class="home-content__contract-table">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table">
+          <p-table [columns]="contractTableColumns" [value]="listContracts">
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{ col.header }}
+                </th>
+              </tr>
+            </ng-template>
+      
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td>{{ rowData['id'] }}</td>
+                <td>{{ rowData['address'] }}</td>
+                <td>
+                  <a [routerLink]="['/contract', rowData['address']]">View</a>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <ng-template #createContractModal>

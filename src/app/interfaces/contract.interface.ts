@@ -11,3 +11,8 @@ export interface IContractItem {
 export interface ICreateContract {
   minimumContribution?: number;
 }
+
+export interface IListContractItem {
+  id?: number;
+  address?: string;
+}
