@@ -8,4 +8,11 @@ export class CustomValidation {
         }
         return null;
     }
+
+    static string(control: AbstractControl): { [key: string]: any } | null {
+        if (control.value && control.value.trim() === '') {
+            return { 'stringInvalid': true };
+        }
+        return null;
+    }
 }

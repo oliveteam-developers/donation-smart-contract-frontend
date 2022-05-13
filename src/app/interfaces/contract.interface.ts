@@ -16,3 +16,11 @@ export interface IListContractItem {
   id?: number;
   address?: string;
 }
+
+export interface IContractDetail {
+  managerAddress?: string;
+  minimumContribution?: string;
+  requests?: string;
+  contributers?: string;
+  balance?: string;
+}

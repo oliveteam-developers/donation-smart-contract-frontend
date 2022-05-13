@@ -1,1 +1,53 @@
-<p>contract-detail works!</p>
+<div class="contract-detail-content">
+  <div class="container">
+    <div class="contract-detail-content__title">
+      <h1>Contract Detail</h1>
+    </div>
+
+    <div class="contract-detail-content__description" *ngIf="contractDetail">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Contract address</label>
+            <p>{{ address }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Manager address</label>
+            <p>{{ contractDetail.managerAddress }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Minimum Contribution (ETH)</label>
+            <p>{{ contractDetail.minimumContribution }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Requests</label>
+            <p>{{ contractDetail.requests }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Contributers</label>
+            <p>{{ contractDetail.contributers }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Balance</label>
+            <p>{{ contractDetail.balance }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
