@@ -64,5 +64,5 @@
 </ng-template>
 
 <ng-template #createRequestModal>
-  <app-create-request></app-create-request>
+  <app-create-request (cancelCb)="closeCreateRequestModal()"></app-create-request>
 </ng-template>

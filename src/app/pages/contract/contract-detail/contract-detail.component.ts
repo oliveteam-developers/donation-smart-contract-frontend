@@ -52,6 +52,12 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  public closeCreateRequestModal() {
+    if (this.createRequestModalRef) {
+      this.createRequestModalRef.close();
+    }
+  }
+
   private async getContractDetail() {
     try {
       const donation = this.web3Service.donationInstance(this.address);
