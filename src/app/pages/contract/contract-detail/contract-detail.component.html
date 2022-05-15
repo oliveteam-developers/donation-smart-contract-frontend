@@ -48,6 +48,21 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="contract-detail-content__description__buttons">
+          <button pButton type="button" label="Contribute" class="p-button-success" (click)="openContributionModal()"></button>
+          <button pButton type="button" label="Create request" (click)="openCreateRequestModal()"></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<ng-template #contributionModal>
+  <app-contribute (cancelCb)="closeContributionModal()"></app-contribute>
+</ng-template>
+
+<ng-template #createRequestModal>
+  <app-create-request></app-create-request>
+</ng-template>

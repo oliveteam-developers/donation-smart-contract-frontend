@@ -25,5 +25,12 @@
         margin-top: 0.3rem;
       }
     }
+    &__buttons {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      button {
+        margin-right: 1rem;
+      }
+    }
   }
 }

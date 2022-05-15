@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 // Services
 import { Web3Service } from '../../../services/web3/web3.service';
@@ -15,20 +16,40 @@ import { IContractDetail } from '../../../interfaces';
 })
 export class ContractDetailComponent implements OnInit, OnDestroy {
 
+  @ViewChild('contributionModal') private contributionModal: TemplateRef<ContractDetailComponent>
+  @ViewChild('createRequestModal') private createRequestModal: TemplateRef<ContractDetailComponent>
+
   public contractDetail: IContractDetail;
   public address: any;
 
   private subscriptions: Subscription[] = [];
+  private contributionModalRef: NgbModalRef;
+  private createRequestModalRef: NgbModalRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private web3Service: Web3Service,
+    private modalService: NgbModal,
   ) {
     this.address = this.activatedRoute.snapshot.paramMap.get('address');
   }
 
   ngOnInit(): void {
     this.getContractDetail();
+  }
+
+  public openContributionModal() {
+    this.contributionModalRef = this.modalService.open(this.contributionModal);
+  }
+
+  public openCreateRequestModal() {
+    this.createRequestModalRef = this.modalService.open(this.createRequestModal);
+  }
+
+  public closeContributionModal() {
+    if (this.contributionModalRef) {
+      this.contributionModalRef.close();
+    }
   }
 
   private async getContractDetail() {

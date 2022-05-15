@@ -10,8 +10,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 
 // Components
-import { CreateContractComponent } from '../components/create-contract/create-contract.component';
 import { LoadingComponent } from '../components/loading/loading.component';
+import { CreateContractComponent } from '../components/create-contract/create-contract.component';
+import { ContributeComponent } from '../components/contribute/contribute.component';
+import { CreateRequestComponent } from '../components/create-request/create-request.component';
 
 const sharedModules = [
   CommonModule,
@@ -26,7 +28,9 @@ const sharedModules = [
 
 const sharedComponents = [
   CreateContractComponent,
-  LoadingComponent
+  LoadingComponent,
+  ContributeComponent,
+  CreateRequestComponent,
 ];
 
 @NgModule({
