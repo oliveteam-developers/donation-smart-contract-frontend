@@ -52,7 +52,7 @@
       <div class="row">
         <div class="contract-detail-content__description__buttons">
           <button pButton type="button" label="Contribute" class="p-button-success" (click)="openContributionModal()"></button>
-          <button pButton type="button" label="Create request" (click)="openCreateRequestModal()"></button>
+          <button *ngIf="isManager" pButton type="button" label="Create request" (click)="openCreateRequestModal()"></button>
         </div>
       </div>
     </div>

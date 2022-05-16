@@ -21,6 +21,7 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
 
   public contractDetail: IContractDetail;
   public address: any;
+  public isManager: boolean = false;
 
   private subscriptions: Subscription[] = [];
   private contributionModalRef: NgbModalRef;
@@ -69,6 +70,11 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
         requests: result[2],
         contributers: result[3],
         balance: result[4],
+      }
+
+      const accounts = await this.web3Service.web3Instance.eth.getAccounts();
+      if (accounts[0] === this.contractDetail.managerAddress) {
+        this.isManager = true;
       }
     } catch (e) {
       console.log(e);
