@@ -24,3 +24,11 @@ export interface IContractDetail {
   contributers?: string;
   balance?: string;
 }
+
+export interface IContractRequest {
+  approvalsCount?: string;
+  complete?: boolean;
+  description?: string;
+  recipient?: string;
+  value?: string;
+}

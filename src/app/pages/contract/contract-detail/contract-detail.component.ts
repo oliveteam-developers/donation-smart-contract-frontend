@@ -2,12 +2,19 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/c
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
 
 // Services
 import { Web3Service } from '../../../services/web3/web3.service';
 
 // Interfaces
-import { IContractDetail } from '../../../interfaces';
+import { IContractDetail, IContractRequest, ITableColumn } from '../../../interfaces';
+
+// States
+import { selectEventData } from 'src/app/states/event';
+
+// Constants
+import { REFRESH_LIST_REQUESTS } from 'src/app/constants';
 
 @Component({
   selector: 'app-contract-detail',
@@ -22,6 +29,8 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
   public contractDetail: IContractDetail;
   public address: any;
   public isManager: boolean = false;
+  public requests: IContractRequest[] = [];
+  public requestTableColumns: ITableColumn[] = [];
 
   private subscriptions: Subscription[] = [];
   private contributionModalRef: NgbModalRef;
@@ -31,11 +40,32 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private web3Service: Web3Service,
     private modalService: NgbModal,
+    private store: Store,
   ) {
     this.address = this.activatedRoute.snapshot.paramMap.get('address');
+
+    this.subscriptions.push(
+      this.store.select(selectEventData).subscribe(res => {
+        if (res) {
+          switch (res.name) {
+            case REFRESH_LIST_REQUESTS: {
+              this.getContractDetail();
+              break;
+            }
+          }
+        }
+      })
+    );
   }
 
   ngOnInit(): void {
+    this.requestTableColumns = [
+      { field: 'description', header: 'Description' },
+      { field: 'value', header: 'Value (WEI)' },
+      { field: 'recipient', header: 'Recipient' },
+      { field: 'approvalsCount', header: 'Number of approvals' },
+    ];
+
     this.getContractDetail();
   }
 
@@ -72,9 +102,45 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
         balance: result[4],
       }
 
+      await this.checkIsManager();
+      await this.getListRequests();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  private async checkIsManager() {
+    try {
       const accounts = await this.web3Service.web3Instance.eth.getAccounts();
       if (accounts[0] === this.contractDetail.managerAddress) {
         this.isManager = true;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  private async getListRequests() {
+    try {
+      if (this.contractDetail.requests) {
+        const requests = [];
+
+        const countRequests = parseInt(this.contractDetail.requests, 10);
+        const donation = this.web3Service.donationInstance(this.address);
+
+        for (let i = 0; i < countRequests; i++) {
+          const req = await donation.methods.requests(i).call();
+          const data: IContractRequest = {
+            approvalsCount: req.approvalsCount,
+            complete: req.complete,
+            description: req.description,
+            recipient: req.recipient,
+            value: req.value,
+          }
+          requests.push(data);
+        }
+
+        this.requests = [...requests];
       }
     } catch (e) {
       console.log(e);
