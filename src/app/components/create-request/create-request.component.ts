@@ -40,8 +40,8 @@ export class CreateRequestComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       description: ['', [Validators.required]],
-      value: [1, [Validators.required, CustomValidation.number]],
-      recipient: ['0x3C6a258Be3265854287Dd809D6330fAc44419Ce1', [Validators.required]]
+      value: ['', [Validators.required, CustomValidation.number]],
+      recipient: ['', [Validators.required]]
     });
   }
 

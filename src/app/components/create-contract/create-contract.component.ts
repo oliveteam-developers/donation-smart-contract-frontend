@@ -33,7 +33,7 @@ export class CreateContractComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      minimumContribution: [0, [Validators.required, CustomValidation.number]],
+      minimumContribution: ['', [Validators.required, CustomValidation.number]],
     });
   }
 
