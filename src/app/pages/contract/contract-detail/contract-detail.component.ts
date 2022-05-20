@@ -25,16 +25,21 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
 
   @ViewChild('contributionModal') private contributionModal: TemplateRef<ContractDetailComponent>
   @ViewChild('createRequestModal') private createRequestModal: TemplateRef<ContractDetailComponent>
+  @ViewChild('confirmModal') private confirmModal: TemplateRef<ContractDetailComponent>
 
   public contractDetail: IContractDetail;
   public address: any;
   public isManager: boolean = false;
+  public isContributor: boolean = false;
   public requests: IContractRequest[] = [];
   public requestTableColumns: ITableColumn[] = [];
+  public message: string = '';
+  public confirmType: string = '';
 
   private subscriptions: Subscription[] = [];
   private contributionModalRef: NgbModalRef;
   private createRequestModalRef: NgbModalRef;
+  private confirmModalRef: NgbModalRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -89,6 +94,43 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  public approveRequest() {
+    this.confirmModalRef = this.modalService.open(this.confirmModal);
+    this.confirmType = 'approve';
+    this.message = 'Do you want to approve this request?';
+  }
+
+  public finishRequest() {
+    this.confirmModalRef = this.modalService.open(this.confirmModal);
+    this.confirmType = 'finish';
+    this.message = 'Do you want to finish this request?';
+  }
+
+  public handleOk() {
+    switch (this.confirmType) {
+      case 'approve': {
+        console.log('approve');
+        break;
+      }
+      case 'finish': {
+        console.log('finish');
+        break;
+      }
+    }
+  }
+
+  public handleCancel() {
+    this.closeConfirmModal();
+  }
+
+  private closeConfirmModal() {
+    if (this.confirmModalRef) {
+      this.confirmModalRef.close();
+      this.confirmType = '';
+      this.message = '';
+    }
+  }
+
   private async getContractDetail() {
     try {
       const donation = this.web3Service.donationInstance(this.address);
@@ -102,19 +144,15 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
         balance: result[4],
       }
 
-      await this.checkIsManager();
-      await this.getListRequests();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  private async checkIsManager() {
-    try {
       const accounts = await this.web3Service.web3Instance.eth.getAccounts();
+
+      this.isContributor = await donation.methods.approvers(accounts[0]).call();
+
       if (accounts[0] === this.contractDetail.managerAddress) {
         this.isManager = true;
       }
+
+      await this.getListRequests();
     } catch (e) {
       console.log(e);
     }

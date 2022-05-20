@@ -14,6 +14,7 @@ import { LoadingComponent } from '../components/loading/loading.component';
 import { CreateContractComponent } from '../components/create-contract/create-contract.component';
 import { ContributeComponent } from '../components/contribute/contribute.component';
 import { CreateRequestComponent } from '../components/create-request/create-request.component';
+import { ConfirmationComponent } from '../components/confirmation/confirmation.component';
 
 const sharedModules = [
   CommonModule,
@@ -31,6 +32,7 @@ const sharedComponents = [
   LoadingComponent,
   ContributeComponent,
   CreateRequestComponent,
+  ConfirmationComponent,
 ];
 
 @NgModule({

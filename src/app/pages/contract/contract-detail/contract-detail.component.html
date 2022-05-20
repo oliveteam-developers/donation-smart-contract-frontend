@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="contract-detail-content__requests" *ngIf="requests.length">
+    <div class="contract-detail-content__requests" *ngIf="requests.length && isContributor">
       <h1>List requests</h1>
 
       <p-table [columns]="requestTableColumns" [value]="requests">
@@ -81,8 +81,8 @@
             <td>{{ rowData['approvalsCount'] }}</td>
             <td>{{ rowData['complete'] ? 'Done' : 'Pending' }}</td>
             <td>
-              <button pButton type="button" label="Approve" class="p-button-success"></button>
-              <button *ngIf="isManager" pButton type="button" label="Finish"></button>
+              <button pButton type="button" label="Approve" class="p-button-success" (click)="approveRequest()"></button>
+              <button *ngIf="isManager" pButton type="button" label="Finish" (click)="finishRequest()"></button>
             </td>
           </tr>
         </ng-template>
@@ -97,4 +97,8 @@
 
 <ng-template #createRequestModal>
   <app-create-request (cancelCb)="closeCreateRequestModal()"></app-create-request>
+</ng-template>
+
+<ng-template #confirmModal>
+  <app-confirmation [message]="message" (okCb)="handleOk()" (cancelCb)="handleCancel()"></app-confirmation>
 </ng-template>
