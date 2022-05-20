@@ -35,6 +35,8 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
   public requestTableColumns: ITableColumn[] = [];
   public message: string = '';
   public confirmType: string = '';
+  public requestIndex: any;
+  public confirmLoading: boolean = false;
 
   private subscriptions: Subscription[] = [];
   private contributionModalRef: NgbModalRef;
@@ -94,26 +96,32 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  public approveRequest() {
+  public openConfirmationModal(index: any, type: string) {
     this.confirmModalRef = this.modalService.open(this.confirmModal);
-    this.confirmType = 'approve';
-    this.message = 'Do you want to approve this request?';
-  }
+    this.requestIndex = index;
 
-  public finishRequest() {
-    this.confirmModalRef = this.modalService.open(this.confirmModal);
-    this.confirmType = 'finish';
-    this.message = 'Do you want to finish this request?';
+    switch (type) {
+      case 'approve': {
+        this.confirmType = 'approve';
+        this.message = 'Do you want to approve this request?';
+        break;
+      }
+      case 'finish': {
+        this.confirmType = 'finish';
+        this.message = 'Do you want to finish this request?';
+        break;
+      }
+    }
   }
 
   public handleOk() {
     switch (this.confirmType) {
       case 'approve': {
-        console.log('approve');
+        this.approveRequest();
         break;
       }
       case 'finish': {
-        console.log('finish');
+        this.finishRequest();
         break;
       }
     }
@@ -128,6 +136,34 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
       this.confirmModalRef.close();
       this.confirmType = '';
       this.message = '';
+      this.requestIndex = null;
+    }
+  }
+
+  private async approveRequest() {
+    try {
+      this.confirmLoading = true;
+      const donation = this.web3Service.donationInstance(this.address);
+      const accounts = await this.web3Service.web3Instance.eth.getAccounts();
+      await donation.methods.approveRequest(parseInt(this.requestIndex)).send({
+        from: accounts[0],
+      });
+      this.getContractDetail();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.confirmLoading = false;
+      this.closeConfirmModal();
+    }
+  }
+
+  private async finishRequest() {
+    try {
+      this.confirmLoading = true;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.confirmLoading = false;
     }
   }
 
