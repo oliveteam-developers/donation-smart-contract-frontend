@@ -73,7 +73,7 @@
         </ng-template>
   
         <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-          <tr>
+          <tr [ngClass]="{'completed': rowData['complete']}">
             <td>{{ rowIndex + 1 }}</td>
             <td>{{ rowData['description'] }}</td>
             <td>{{ rowData['value'] }}</td>
@@ -81,8 +81,22 @@
             <td>{{ rowData['approvalsCount'] }}</td>
             <td>{{ rowData['complete'] ? 'Done' : 'Pending' }}</td>
             <td>
-              <button pButton type="button" label="Approve" class="p-button-success" (click)="openConfirmationModal(rowIndex, 'approve')"></button>
-              <button *ngIf="isManager && rowData['completable']" pButton type="button" label="Finish" (click)="openConfirmationModal(rowIndex, 'finish')"></button>
+              <button 
+                *ngIf="!rowData['complete']" 
+                pButton 
+                type="button" 
+                label="Approve" 
+                class="p-button-success" 
+                (click)="openConfirmationModal(rowIndex, 'approve')"
+              ></button>
+
+              <button 
+                *ngIf="isManager && rowData['completable'] && !rowData['complete']" 
+                pButton 
+                type="button" 
+                label="Finish" 
+                (click)="openConfirmationModal(rowIndex, 'finish')"
+              ></button>
             </td>
           </tr>
         </ng-template>

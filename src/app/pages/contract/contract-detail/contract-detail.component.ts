@@ -160,10 +160,17 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
   private async finishRequest() {
     try {
       this.confirmLoading = true;
+      const donation = this.web3Service.donationInstance(this.address);
+      const accounts = await this.web3Service.web3Instance.eth.getAccounts();
+      await donation.methods.finishRequest(parseInt(this.requestIndex)).send({
+        from: accounts[0],
+      });
+      this.getContractDetail();
     } catch (e) {
       console.log(e);
     } finally {
       this.confirmLoading = false;
+      this.closeConfirmModal();
     }
   }
 
