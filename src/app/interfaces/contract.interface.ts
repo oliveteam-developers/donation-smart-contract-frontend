@@ -18,11 +18,11 @@ export interface IListContractItem {
 }
 
 export interface IContractDetail {
-  managerAddress?: string;
-  minimumContribution?: string;
-  requests?: string;
-  contributers?: string;
-  balance?: string;
+  managerAddress: string;
+  minimumContribution: string;
+  requests: string;
+  contributers: string;
+  balance: string;
 }
 
 export interface IContractRequest {
@@ -31,4 +31,5 @@ export interface IContractRequest {
   description?: string;
   recipient?: string;
   value?: string;
+  completable?: boolean;
 }

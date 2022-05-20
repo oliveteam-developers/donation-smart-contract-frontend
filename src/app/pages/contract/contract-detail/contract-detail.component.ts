@@ -210,6 +210,7 @@ export class ContractDetailComponent implements OnInit, OnDestroy {
             description: req.description,
             recipient: req.recipient,
             value: req.value,
+            completable: parseInt(req.approvalsCount) > (parseInt(this.contractDetail.contributers) / 2)
           }
           requests.push(data);
         }

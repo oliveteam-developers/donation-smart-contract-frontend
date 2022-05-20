@@ -82,7 +82,7 @@
             <td>{{ rowData['complete'] ? 'Done' : 'Pending' }}</td>
             <td>
               <button pButton type="button" label="Approve" class="p-button-success" (click)="openConfirmationModal(rowIndex, 'approve')"></button>
-              <button *ngIf="isManager" pButton type="button" label="Finish" (click)="openConfirmationModal(rowIndex, 'finish')"></button>
+              <button *ngIf="isManager && rowData['completable']" pButton type="button" label="Finish" (click)="openConfirmationModal(rowIndex, 'finish')"></button>
             </td>
           </tr>
         </ng-template>
@@ -100,5 +100,10 @@
 </ng-template>
 
 <ng-template #confirmModal>
-  <app-confirmation [message]="message" [loading]="confirmLoading" (okCb)="handleOk()" (cancelCb)="handleCancel()"></app-confirmation>
+  <app-confirmation
+    [message]="message"
+    [loading]="confirmLoading"
+    (okCb)="handleOk()"
+    (cancelCb)="handleCancel()"
+  ></app-confirmation>
 </ng-template>
