@@ -1,0 +1,74 @@
+<div class="create-request-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Create request</h5>
+  </div>
+
+  <form [formGroup]="form" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="form-item">
+        <label>Description</label>
+
+        <input type="text" formControlName="description" pInputText />
+        
+        <div *ngIf="form.controls['description'].invalid && form.controls['description'].touched">
+          <small class="error" *ngIf="form.controls['description'].errors?.['required']">
+            Description is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-item">
+        <label>Value (WEI)</label>
+
+        <input type="text" formControlName="value" pInputText />
+        
+        <div *ngIf="form.controls['value'].invalid && form.controls['value'].touched">
+          <small class="error" *ngIf="form.controls['value'].errors?.['required']">
+            Value is required.
+          </small>
+
+          <small class="error" *ngIf="form.controls['value'].errors?.['numberInvalid']">
+            Value must be number.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-item">
+        <label>Recipient</label>
+
+        <input type="text" formControlName="recipient" pInputText />
+        
+        <div *ngIf="form.controls['recipient'].invalid && form.controls['recipient'].touched">
+          <small class="error" *ngIf="form.controls['recipient'].errors?.['required']">
+            Recipient is required.
+          </small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button
+        *ngIf="!loading"
+        pButton 
+        type="submit" 
+        label="Create"
+      ></button>
+
+      <button
+        *ngIf="loading"
+        pButton 
+        type="button" 
+        label="Create"
+        [loading]="true"
+      ></button>
+  
+      <button 
+        pButton 
+        type="button" 
+        label="Cancel" 
+        class="p-button-outlined" 
+        (click)="cancel()"
+      ></button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,123 @@
+<div class="contract-detail-content">
+  <div class="container">
+    <div class="contract-detail-content__title">
+      <h1>Contract Detail</h1>
+    </div>
+
+    <div class="contract-detail-content__description" *ngIf="contractDetail">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Contract address</label>
+            <p>{{ address }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Manager address</label>
+            <p>{{ contractDetail.managerAddress }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Minimum Contribution (ETH)</label>
+            <p>{{ contractDetail.minimumContribution }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Requests</label>
+            <p>{{ contractDetail.requests }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Contributers</label>
+            <p>{{ contractDetail.contributers }}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+          <div class="contract-detail-content__description__item">
+            <label>Balance (WEI)</label>
+            <p>{{ contractDetail.balance }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="contract-detail-content__description__buttons">
+          <button pButton type="button" label="Contribute" class="p-button-success" (click)="openContributionModal()"></button>
+          <button *ngIf="isManager" pButton type="button" label="Create request" (click)="openCreateRequestModal()"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="contract-detail-content__requests" *ngIf="requests.length && isContributor">
+      <h1>List requests</h1>
+
+      <p-table [columns]="requestTableColumns" [value]="requests">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>No</th>
+            <th *ngFor="let col of columns">
+              {{ col.header }}
+            </th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+  
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+          <tr [ngClass]="{'completed': rowData['complete']}">
+            <td>{{ rowIndex + 1 }}</td>
+            <td>{{ rowData['description'] }}</td>
+            <td>{{ rowData['value'] }}</td>
+            <td>{{ rowData['recipient'] }}</td>
+            <td>{{ rowData['approvalsCount'] }}</td>
+            <td>{{ rowData['complete'] ? 'Done' : 'Pending' }}</td>
+            <td>
+              <button 
+                *ngIf="!rowData['complete']" 
+                pButton 
+                type="button" 
+                label="Approve" 
+                class="p-button-success" 
+                (click)="openConfirmationModal(rowIndex, 'approve')"
+              ></button>
+
+              <button 
+                *ngIf="isManager && rowData['completable'] && !rowData['complete']" 
+                pButton 
+                type="button" 
+                label="Finish" 
+                (click)="openConfirmationModal(rowIndex, 'finish')"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<ng-template #contributionModal>
+  <app-contribute (cancelCb)="closeContributionModal()"></app-contribute>
+</ng-template>
+
+<ng-template #createRequestModal>
+  <app-create-request (cancelCb)="closeCreateRequestModal()"></app-create-request>
+</ng-template>
+
+<ng-template #confirmModal>
+  <app-confirmation
+    [message]="message"
+    [loading]="confirmLoading"
+    (okCb)="handleOk()"
+    (cancelCb)="handleCancel()"
+  ></app-confirmation>
+</ng-template>

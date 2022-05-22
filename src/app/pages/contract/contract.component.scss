@@ -1,0 +1,29 @@
+.contract-content {
+  &__title {
+    padding: 2rem;
+    h1 {
+      font-size: 2rem;
+      font-weight: 200;
+      text-align: center;
+    }
+  }
+  &__create-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  &__contract-table {
+    .table {
+      margin-top: 2rem;
+      p-table {
+        tr {
+          td {
+            a {
+              text-decoration: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

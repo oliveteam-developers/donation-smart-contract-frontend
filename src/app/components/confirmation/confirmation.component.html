@@ -1,0 +1,14 @@
+<div class="confirmation-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Confirmation</h5>
+  </div>
+
+  <div class="modal-body">
+    <h3>{{ message }}</h3>
+  </div>
+
+  <div class="modal-footer">
+    <button pButton type="button" label="OK" class="p-button-success" (click)="ok()" [loading]="loading"></button>
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="cancel()"></button>
+  </div>
+</div>

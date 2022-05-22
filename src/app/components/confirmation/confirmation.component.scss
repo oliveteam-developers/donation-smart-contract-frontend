@@ -1,0 +1,16 @@
+.confirmation-content {
+  .modal-body {
+    h3 {
+      font-size: 1rem;
+      font-weight: 200;
+      margin: 1rem 0;
+    }
+  }
+  .modal-footer {
+    button {
+      &:first-child {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

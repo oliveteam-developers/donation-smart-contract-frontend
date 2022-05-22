@@ -1,0 +1,50 @@
+<div class="create-contract-content">
+  <div class="modal-header">
+    <h5 class="modal-title">Create contract</h5>
+  </div>
+
+  <form [formGroup]="form" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="form-item">
+        <label>Minimum Contribution (ETH)</label>
+
+        <input type="text" formControlName="minimumContribution" pInputText />
+        
+        <div *ngIf="form.controls['minimumContribution'].invalid && form.controls['minimumContribution'].touched">
+          <small class="error" *ngIf="form.controls['minimumContribution'].errors?.['required']">
+            Minimum Contribution is required.
+          </small>
+
+          <small class="error" *ngIf="form.controls['minimumContribution'].errors?.['numberInvalid']">
+            Minimum Contribution must be number.
+          </small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <button
+        *ngIf="!loading"
+        pButton 
+        type="submit" 
+        label="Create"
+      ></button>
+
+      <button
+        *ngIf="loading"
+        pButton 
+        type="button" 
+        label="Create"
+        [loading]="true"
+      ></button>
+  
+      <button 
+        pButton 
+        type="button" 
+        label="Cancel" 
+        class="p-button-outlined" 
+        (click)="cancel()"
+      ></button>
+    </div>
+  </form>
+</div>
